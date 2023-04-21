@@ -149,15 +149,15 @@ class OxoApplicationTests {
                 Sondage.class,
                 sondage.getId());
 
-        Sondage sondage = response.getBody();
+        Sondage sondageRecupere = response.getBody();
 
-        assertNotNull(sondage);
-        assertEquals(sondage.getId(), sondage.getId());
-        assertEquals(sondage.getQuestion(), sondage.getQuestion());
-        assertEquals(sondage.getDescription(), sondage.getDescription());
-        assertEquals(sondage.getDateCreation(), sondage.getDateCreation());
-        assertEquals(sondage.getDateCloture(), sondage.getDateCloture());
-        assertEquals(sondage.getCreateur(), sondage.getCreateur());
+        assertNotNull(sondageRecupere);
+        assertEquals(sondage.getId(), sondageRecupere.getId());
+        assertEquals(sondage.getQuestion(), sondageRecupere.getQuestion());
+        assertEquals(sondage.getDescription(), sondageRecupere.getDescription());
+        assertEquals(sondage.getDateCreation(), sondageRecupere.getDateCreation());
+        assertEquals(sondage.getDateCloture(), sondageRecupere.getDateCloture());
+        assertEquals(sondage.getCreateur(), sondageRecupere.getCreateur());
     }
 
     /**
