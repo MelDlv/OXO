@@ -4,7 +4,7 @@ import fr.simplon.oxo.entity.Sondage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -13,7 +13,7 @@ public class SondageController {
 
     public SondageController(SondageRepository repo) {
         this.repo = repo;
-        //this.repo.save(new Sondage("bonbon", "Peut-on avoir plus de bonbons?", LocalDate.now(), LocalDate.of(2023, 4, 27), "Anonyme"));
+        //this.repo.save(new Sondage("Logo", "Pensez-vous que le capybara pourrait être un bon choix de logo pour l'entreprise Oxo?", LocalDate.now(), LocalDate.of(2023, 4, 29), "Anonyme"));
         //this.repo.save(new Sondage("Les capybaras", "Aimez-vous les capybaras ?", LocalDate.now(), LocalDate.of(2023, 5, 1), "Moi-même"));
     }
 

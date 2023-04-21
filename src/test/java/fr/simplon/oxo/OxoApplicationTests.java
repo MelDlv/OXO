@@ -87,12 +87,12 @@ class OxoApplicationTests {
     @Test
     public void testDeleteSondage() {
         HttpHeaders headers = new HttpHeaders();
-        HttpEntity<Void> entity = new HttpEntity<>(null, headers);
+        HttpEntity<Void> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<Void> response = restTemplate.exchange(
                 "http://localhost:8080/sondages/" + sondage.getId(),
                 HttpMethod.DELETE,
-                entity,
+                request,
                 Void.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
