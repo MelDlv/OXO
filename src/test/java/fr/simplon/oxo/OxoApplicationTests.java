@@ -9,29 +9,49 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
+
 import fr.simplon.oxo.SondageRepository;
 import org.springframework.http.HttpHeaders;
 
+/**
+ * Classe de test pour l'application Oxo.
+ */
 @SpringBootTest
 class OxoApplicationTests {
+    /**
+     * Client REST pour envoyer des requêtes HTTP.
+     */
     private final RestTemplate restTemplate = new RestTemplate();
+
+    /**
+     * Headers HTTP à utiliser dans les requêtes.
+     */
     private final HttpHeaders headers = new HttpHeaders();
 
     @Autowired
     private SondageRepository repo;
 
+    /**
+     * Sondage de test à utiliser dans les tests.
+     */
     private Sondage sondage;
 
+    /**
+     * Méthode exécutée avant chaque test pour initialiser le sondage de test.
+     */
     @BeforeEach
     public void setup() {
         this.sondage = new Sondage("test", "test", LocalDate.now(), LocalDate.of(2023, 4, 27), "test");
         this.repo.save(sondage);
     }
 
+    /**
+     * Test pour l'ajout d'un nouveau sondage.
+     */
     @Test
     public void testaddSondage() {
+        //définit le type de contenu de la demande. Ici, le type de contenu est JSON.
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Sondage> request = new HttpEntity<>(sondage, headers);
 
@@ -50,6 +70,9 @@ class OxoApplicationTests {
         assertEquals(sondage.getCreateur(), response.getBody().getCreateur());
     }
 
+    /**
+     * Test pour la récupération de tous les sondages.
+     */
     @Test
     public void testAllSondages() {
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -59,8 +82,17 @@ class OxoApplicationTests {
                 HttpMethod.GET,
                 request,
                 Sondage[].class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        Sondage[] sondages = response.getBody();
+        assertNotNull(sondages);
+        assertTrue(sondages.length > 0);
     }
 
+    /**
+     * Test pour la mise à jour d'un sondage par son id.
+     */
     @Test
     public void testupdateSondage() {
         sondage.setQuestion("update question");
@@ -84,6 +116,9 @@ class OxoApplicationTests {
         assertEquals(sondage.getId(), response.getBody().getId());
     }
 
+    /**
+     * Test pour la suppression d'un sondage par son id.
+     */
     @Test
     public void testDeleteSondage() {
         HttpHeaders headers = new HttpHeaders();
@@ -99,6 +134,9 @@ class OxoApplicationTests {
         assertFalse(repo.findById(sondage.getId()).isPresent());
     }
 
+    /**
+     * Test pour vérifier la récupération des informations d'un sondage par son id.
+     */
     @Test
     public void testinfoSondage() {
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -122,6 +160,9 @@ class OxoApplicationTests {
         assertEquals(sondage.getCreateur(), sondage.getCreateur());
     }
 
+    /**
+     * Méthode exécutée après chaque test pour supprimer le sondage créé lors avant chaque test.
+     */
     @AfterEach
     public void teardown() {
         if (sondage != null) {

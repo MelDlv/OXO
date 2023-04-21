@@ -3,6 +3,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
+/**
+ * Cette classe représente un sondage avec une description, une question, une date de création, une date de clôture et un créateur.
+ */
 @Entity
 @Table(name = "sondages")
 public class Sondage {
@@ -27,6 +30,15 @@ public class Sondage {
     @NotBlank
     @Size(max = 64)
     private String createur;
+
+    /**
+     * Constructeur avec paramètres.
+     * @param description la description du sondage
+     * @param question la question posée dans le sondage
+     * @param dateCreation la date de création du sondage
+     * @param dateCloture la date de clôture du sondage
+     * @param createur le créateur du sondage
+     */
     public Sondage(String description, String question, LocalDate dateCreation, LocalDate dateCloture, String createur) {
         this.description = description;
         this.question = question;
