@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
-
 import fr.simplon.oxo.SondageRepository;
 import org.springframework.http.HttpHeaders;
 
@@ -86,8 +85,13 @@ class OxoApplicationTests {
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         Sondage[] sondages = response.getBody();
+        if (sondages != null) {
+            assertTrue(sondages.length > 0);
+        } else {
+            fail("Il n'y a pas de sondages.");
+        }
+
         assertNotNull(sondages);
-        assertTrue(sondages.length > 0);
     }
 
     /**
